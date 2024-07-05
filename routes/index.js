@@ -1,4 +1,4 @@
-var conn = require('./../inc/db');
+
 var express = require('express');
 var menus = require('./../inc/menus');
 var router = express.Router();
@@ -9,7 +9,8 @@ router.get('/', function(req, res, next) {
       title: 'Restaurante Saboroso',
       menus: results,
       h1: 'Restaurante Saboroso!',
-      background: 'images/img_bg_1.jpg'
+      background: 'images/img_bg_1.jpg',
+      isHome: true
      });
   });
 });
