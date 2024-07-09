@@ -1,5 +1,7 @@
 var express = require('express');
+const session = require('express-session');
 var router = express.Router();
+var users = require("./../inc/users");
 
 router.get("/", function(req, res, next){
     res.render('admin/index');
@@ -17,8 +19,25 @@ router.get("/emails", function(req, res, next){
     res.render('admin/emails');
 });
 
+router.post("/login", function(req, res, next){
+    if (!req.body.email) {
+        users.render(req, res, "Preencha o campo e-mail."); 
+    } else if (!req.body.password) {
+        users.render(req, res, "Preencha o campo senha."); 
+    } else {
+        users.login(req.body.email, req.body.password).then(user=>{
+
+            req.session.user = user;
+
+            res.redirect("/admin");
+
+        }).catch(err => {
+            users.render(req, res, err.message); 
+        });
+    }
+});
 router.get("/login", function(req, res, next){
-    res.render('admin/login');
+    res.render(req, res, null);
 });
 
 router.get("/reservations", function(req, res, next){
