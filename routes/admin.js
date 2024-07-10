@@ -17,9 +17,6 @@ router.get("/logout", function(req, res, next){
     
     res.redirect('admin/login');
 });
-router.get("/", function(req, res, next){
-    res.render('admin/index');
-});
 
 router.post("/login", function(req, res, next){
     if (!req.body.email) {
@@ -41,6 +38,10 @@ router.post("/login", function(req, res, next){
 
 router.get("/login", function(req, res, next){
     res.render('admin/login');
+});
+
+router.get("/", function(req, res, next){
+    res.render('/admin');
 });
 
 router.get("/contacts", function(req, res, next){

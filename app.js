@@ -7,7 +7,7 @@ var session = require('express-session');
 var RedisStore = require("connect-redis").default;
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// var usersRouter = require('./routes/users');
 var adminRouter = require('./routes/admin');
 const { createClient } = require("redis");
 
@@ -42,7 +42,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// app.use('/users', usersRouter);
 app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
