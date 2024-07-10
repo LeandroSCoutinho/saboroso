@@ -3,20 +3,22 @@ const session = require('express-session');
 var router = express.Router();
 var users = require("./../inc/users");
 
+router.use(function (req, res, next) {
+    if (['/login'].indexOf(req.url) === -1 && !req.session.user) {
+        res.redirect("/admin/login");
+    } else {
+        next();
+    }
+
+});
+
+router.get("/logout", function(req, res, next){
+    delete req.session.user;
+    
+    res.redirect('admin/login');
+});
 router.get("/", function(req, res, next){
     res.render('admin/index');
-});
-
-router.get("/contacts", function(req, res, next){
-    res.render('admin/contacts');
-});
-
-router.get("/menus", function(req, res, next){
-    res.render('admin/menus');
-});
-
-router.get("/emails", function(req, res, next){
-    res.render('admin/emails');
 });
 
 router.post("/login", function(req, res, next){
@@ -32,13 +34,27 @@ router.post("/login", function(req, res, next){
             res.redirect("/admin");
 
         }).catch(err => {
-            users.render(req, res, err.message); 
+            users.render(req, res, err.message ); 
         });
     }
 });
+
 router.get("/login", function(req, res, next){
-    res.render(req, res, null);
+    res.render('admin/login');
 });
+
+router.get("/contacts", function(req, res, next){
+    res.render('admin/contacts');
+});
+
+router.get("/menus", function(req, res, next){
+    res.render('admin/menus');
+});
+
+router.get("/emails", function(req, res, next){
+    res.render('admin/emails');
+});
+
 
 router.get("/reservations", function(req, res, next){
     res.render('admin/reservations', {date:{
