@@ -1,5 +1,16 @@
 <%- include('inc/header') -%>
-
+ <!-- Content Wrapper. Contains page content -->
+ <div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      Menu
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="/"><i class="fa fa-home"></i> Home</a></li>
+      <li class="active">Menu</li>
+    </ol>
+  </section>
   <!-- Main content -->
   <section class="content container-fluid">
 
@@ -12,7 +23,7 @@
 
           <div class="info-box-content">
             <span class="info-box-text">Reservas</span>
-            <span class="info-box-number">90</span>
+            <span class="info-box-number"><%= data.nrreservations %></span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -27,7 +38,7 @@
 
           <div class="info-box-content">
             <span class="info-box-text">Contatos</span>
-            <span class="info-box-number">41</span>
+            <span class="info-box-number"><%= data.nrcontacts %></span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -46,7 +57,7 @@
 
           <div class="info-box-content">
             <span class="info-box-text">Menu</span>
-            <span class="info-box-number">3</span>
+            <span class="info-box-number"><%= data.nrmenus %></span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -61,7 +72,7 @@
 
           <div class="info-box-content">
             <span class="info-box-text">Usuários</span>
-            <span class="info-box-number">2</span>
+            <span class="info-box-number"><%= data.nrusers %></span>
           </div>
           <!-- /.info-box-content -->
         </div>
