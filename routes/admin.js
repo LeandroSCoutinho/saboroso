@@ -66,6 +66,10 @@ router.get("/menus", function(req, res, next){
     });
 });
 
+router.post("/menus", function(req, res, next){
+   res.send(req.body);
+});
+
 router.get("/emails", function(req, res, next){
     res.render('admin/emails',admin.getParams(req));
 });
