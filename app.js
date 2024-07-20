@@ -16,24 +16,24 @@ const { createClient } = require("redis");
 
 var app = express();
 
-app.use(function(req, res, next){
+// app.use(function(req, res, next){
 
-  if (req.method === 'POST') {
-      var form = formidable.IncomingForm({
-        uploadDir: path.join(__dirname, "/public/images"),
-        keepExtensions: true 
-      });
+//   if (req.method === 'POST') {
+//       var form = formidable.IncomingForm({
+//         uploadDir: path.join(__dirname, "/public/images"),
+//         keepExtensions: true 
+//       });
     
-      form.parse(req, function(err, fields, files){
-        req.fields = fields;
-        req.files = files;
+//       form.parse(req, function(err, fields, files){
+//         req.fields = fields;
+//         req.files = files;
     
-        next();
-      });
-  } else {
-    next();
-  }
-});
+//         next();
+//       });
+//   } else {
+//     next();
+//   }
+// });
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
