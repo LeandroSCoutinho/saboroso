@@ -43,7 +43,7 @@
                   <td><%= row.title %></td>
                   <td><%= row.description %>.</td>
                   <td>R$:<%= row.price.replace('.', ',') %></td>
-                  <td><button type="button" class="btn btn-xs btn-info btn-update" data-toggle="modal" data-target="#modal-update"><i
+                  <td><button type="button" class="btn btn-xs btn-info btn-update"><i
                         class="fa fa-pencil"></i> Editar</button>&nbsp;<button type="button" class="btn btn-xs btn-danger btn-delete"><i
                         class="fa fa-trash"></i> Excluir</button></td>
                 </tr>
@@ -148,19 +148,49 @@
 
       
       formCreate.addEventListener( 'submit', e => {
-        e.preventDefault();
+          e.preventDefault();
 
-        let formCreateData = new FormData(formCreate);
+          let formCreateData = new FormData(formCreate);
 
-        fetch('/admin/menus', {
-          method: 'POST',
-          body: formCreateData
-        })
-          .then(response => response.json())
-          .then(json => {
-            window.location.reload();
+          fetch('/admin/menus', {
+            method: 'POST',
+            body: formCreateData
           })
-          
-
+            .then(response => response.json())
+            .then(json => {
+              window.location.reload();
+          })
       });
+
+      let formUpdate = document.querySelector("#modal-update form");
+
+      [...document.querySelectorAll(".btn-update")].forEach(btn => {
+          btn.addEventListener('click', e => {
+              let tr = e.composedPath().find(el => el.tagName && el.tagName.toUpperCase() === 'TR');
+
+              if (tr) {
+                  let data = JSON.parse(tr.dataset.row);
+                  
+                  for (let name in  data) {
+    
+                    switch (name) {
+                      case 'photo':
+    
+                      break;
+                      default: 
+                        let input = formUpdate.querySelector(`[name=${name}]`);
+                        if (input) input.value =  data[name];
+                    }
+                   
+                  }
+              }
+
+
+              $('#modal-update').modal('show');
+
+          });
+      });
+
+ 
+
     </script>
