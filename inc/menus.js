@@ -22,7 +22,7 @@ module.exports = {
 
         fields.photo = `images/${path.parse(files.photo.path).base}`;
 
-        let query, queryPhoto = '', params = [
+        let query, queryPhoto = '   ', params = [
           fields.title,
           fields.description,
           fields.price
@@ -65,5 +65,24 @@ module.exports = {
             }
           });
       });
+    },
+    
+    delete(id){
+    
+      return new Promise((resolve, reject) => {
+        conn.query(`
+          DELETE FROM tb_menus WHERE id = ? 
+          `,
+           [id],
+           (err, results) => {
+          if(err){
+            reject(err);
+          }else{
+            resolve(results);
+          }
+        });
+    
+      });
     }
 }
+ 

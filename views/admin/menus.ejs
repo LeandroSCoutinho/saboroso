@@ -168,7 +168,7 @@
 
       [...document.querySelectorAll(".btn-update")].forEach(btn => {
           btn.addEventListener('click', e => {
-              let tr = e.composedPath().find(el => el.tagName && el.tagName.toUpperCase() === 'TR');
+              
 
               if (tr) {
                   let data = JSON.parse(tr.dataset.row);
@@ -190,9 +190,29 @@
 
               $('#modal-update').modal('show');
 
-          });
-      });
+            });
+       });
 
+      [...document.querySelectorAll(".btn-delete")].forEach(btn => {
+        btn.addEventListener('click', e => {
+          let tr = e.composedPath().find(el => el.tagName && el.tagName.toUpperCase() === 'TR');
+
+          if (tr) {
+            let data = JSON.parse(tr.dataset.row);
+
+            if (confirm(`Deseje realmente deletar o menu ${data.title}?`)) {
+
+                fetch(`/admin/menus/${data.id}`, {
+                  method: 'DELETE'
+                })
+                  .then(response => response.json())
+                  .then(json => {
+                   window.location.reload();
+                  });
+              }        
+           }
+        });
+      });
  
 
     </script>
