@@ -160,9 +160,9 @@
       let formUpdate = document.querySelector("#modal-update form");
 
       formUpdate.save().then(json => {
-        // window.location.reload();
+        window.location.reload();
       }).catch(err =>{
-          console.log("ERRO: " + err);
+        console.log(err);
       });
 
 
