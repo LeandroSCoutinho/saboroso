@@ -22,7 +22,7 @@ module.exports = {
 
         fields.photo = `images/${path.parse(files.photo.path).base}`;
 
-        let query, queryPhoto = '   ', params = [
+        let query, queryPhoto = '', params = [
           fields.title,
           fields.description,
           fields.price

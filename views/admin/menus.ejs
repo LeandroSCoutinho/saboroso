@@ -168,8 +168,7 @@
 
       [...document.querySelectorAll(".btn-update")].forEach(btn => {
           btn.addEventListener('click', e => {
-              
-
+          let tr = e.composedPath().find(el => el.tagName && el.tagName.toUpperCase() === 'TR');
               if (tr) {
                   let data = JSON.parse(tr.dataset.row);
 
@@ -186,7 +185,6 @@
                    
                   }
               }
-
 
               $('#modal-update').modal('show');
 
