@@ -6,7 +6,23 @@ class HcodeGrid {
         configs.listeners = Object.assign({
             afterEventUpdateClick: (e) => {
                 $('#modal-update').modal('show');
-              }
+            },
+            afterEventDeleteClick: (e) => {
+                window.location.reload();
+            },
+            afterFormCreate: (e) => {
+                window.location.reload();
+            },
+            afterFormUpdate: (e) => {
+                window.location.reload();
+            },
+            afterFormCreateError: (e) => {
+                alert('Não foi possível salvar o formulário!');
+            },
+            afterFormUpdateError: (e) => {
+                alert('Não foi possível salvar o formulário!');
+            }
+
         },configs.listeners);
 
         this.options = Object.assign({},{
@@ -24,17 +40,17 @@ class HcodeGrid {
         let formCreate = document.querySelector(this.options.formCreate);
 
         formCreate.save().then(json => {
-          window.location.reload();
+          this.fireEvent('afterFormCreate');
         }).catch(err =>{
-            console.log(err);
+            this.fireEvent('afterFormCreateError');
         });
 
         let formUpdate = document.querySelector(this.options.formUpdate);
 
         formUpdate.save().then(json => {
-          window.location.reload();
+            this.fireEvent('afterFormUpdate');
         }).catch(err =>{
-          console.log(err);
+            this.fireEvent('afterFormUpdateError');
         });
     }
 
@@ -75,6 +91,9 @@ class HcodeGrid {
 
         [...document.querySelectorAll(this.options.btnDelete)].forEach(btn => {
             btn.addEventListener('click', e => {
+
+                this.fireEvent('beforeEventDeleteClick');
+
                 let tr = e.composedPath().find(el => el.tagName && el.tagName.toUpperCase() === 'TR');
     
                 if (tr) {
@@ -87,7 +106,9 @@ class HcodeGrid {
                     })
                         .then(response => response.json())
                         .then(json => {
-                        window.location.reload();
+                        
+                        this.fireEvent('afterEventDeleteClick');
+                        
                         });
                     }        
                 }
