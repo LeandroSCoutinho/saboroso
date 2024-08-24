@@ -144,73 +144,28 @@
 
     <script src="/js/filereaderIMG.js"></script>
     <script src="/js/formSave.js"></script>
+    <script src="/js/hcode-grid.js"></script>
     <script>
       new FileReaderIMG("#modal-create [type=file]", "#modal-create img");
       new FileReaderIMG("#modal-update [type=file]", "#modal-update img");
 
+      new HcodeGrid({
+          deleteUrl: '/admin/menus/${data.id}' ,
+          deleteMsg: 'Deseje realmente deletar o menu ${data.name}?',
+          onUpdateLoad: (formUpdate, name, data) => {
+            
+            switch (name) {
+                case 'photo':
+                    formUpdate.querySelector(`img`).src = '/' + data[name];
+                    break;
+                default:
+                    let input = formUpdate.querySelector(`[name=${name}]`);
+                    if (input) input.value = data[name];
 
-      let formCreate = document.querySelector('#modal-create form');
+            }
 
-      formCreate.save().then(json => {
-        window.location.reload();
-      }).catch(err =>{
-          console.log(err);
-      });
-
-      let formUpdate = document.querySelector("#modal-update form");
-
-      formUpdate.save().then(json => {
-        window.location.reload();
-      }).catch(err =>{
-        console.log(err);
-      });
-
-
-      [...document.querySelectorAll(".btn-update")].forEach(btn => {
-          btn.addEventListener('click', e => {
-          let tr = e.composedPath().find(el => el.tagName && el.tagName.toUpperCase() === 'TR');
-              if (tr) {
-                  let data = JSON.parse(tr.dataset.row);
-
-                  for (let name in  data) {
-    
-                    switch (name) {
-                      case 'photo':
-                        formUpdate.querySelector("img").src = "/"+data[name];
-                      break;
-                      default: 
-                        let input = formUpdate.querySelector(`[name=${name}]`);
-                        if (input) input.value =  data[name];
-                    }
-                   
-                  }
-              }
-
-              $('#modal-update').modal('show');
-
-            });
-       });
-
-      [...document.querySelectorAll(".btn-delete")].forEach(btn => {
-        btn.addEventListener('click', e => {
-          let tr = e.composedPath().find(el => el.tagName && el.tagName.toUpperCase() === 'TR');
-
-          if (tr) {
-            let data = JSON.parse(tr.dataset.row);
-
-            if (confirm(`Deseje realmente deletar o menu ${data.title}?`)) {
-
-                fetch(`/admin/menus/${data.id}`, {
-                  method: 'DELETE'
-                })
-                  .then(response => response.json())
-                  .then(json => {
-                   window.location.reload();
-                  });
-              }        
-           }
+        }
+          
         });
-      });
- 
 
     </script>

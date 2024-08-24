@@ -65,22 +65,14 @@ class HcodeGrid {
             this.fireEvent('beforeEventUpdateClick', [e]);
 
             let tr = e.composedPath().find(el => el.tagName && el.tagName.toUpperCase() === 'TR');
+            let formUpdate = document.querySelector(this.options.formUpdate);
+            
                 if (tr) {
                     let data = JSON.parse(tr.dataset.row);
 
                     for (let name in  data) {
-                      let formUpdate = document.querySelector(this.options.formUpdate);
-                      let input = formUpdate.querySelector(`[name=${name}]`);
-
-                      switch (name) {
-                        case 'date':
-                          if (input) input.value = moment(data[name]).format("YYYY-MM-DD");
-                          
-                        break;
-
-                        default: 
-                          if (input) input.value =  data[name];
-                      }
+                    
+                      this.options.onUpdateLoad(formUpdate, name, data);
                     
                     }
                 }
