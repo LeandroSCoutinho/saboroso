@@ -29,7 +29,11 @@ class HcodeGrid {
             formCreate: '#modal-create form',
             formUpdate : '#modal-update form',
             btnUpdate: '.btn-update',
-            btnDelete: '.btn-delete'
+            btnDelete: '.btn-delete',
+            onUpdateLoad: (formUpdate, name, data) => {
+                let input = formUpdate.querySelector(`[name=${name}]`);
+                if (input) input.value =  data[name];
+              }
         }, configs);
         
         this.initForms();
@@ -83,7 +87,7 @@ class HcodeGrid {
 
         [...document.querySelectorAll(this.options.btnDelete)].forEach(btn => {
             btn.addEventListener('click', e => {
-
+                console.log(e.target.value);
                 this.fireEvent('beforeEventDeleteClick');
 
                 let tr = e.composedPath().find(el => el.tagName && el.tagName.toUpperCase() === 'TR');
