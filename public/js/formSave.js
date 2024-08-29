@@ -4,9 +4,9 @@ HTMLFormElement.prototype.save = function(config){
 
     form.addEventListener( 'submit', e => {
         e.preventDefault();
-
+        
         let formData = new FormData(form);
-
+        
         fetch(form.action, {
           method: form.method,
           body: formData

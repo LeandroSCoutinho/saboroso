@@ -45,25 +45,30 @@ class HcodeGrid {
     initForms(){
         this.formCreate = document.querySelector(this.options.formCreate);
 
-        this.formCreate.save({
-            success: () => {
-                this.fireEvent('afterFormCreate');
-            },
-            failure: () => {
-                this.fireEvent('afterFormCreateError');
-            }        
-        });
+        if (this.formCreate) {
+            this.formCreate.save({
+                success: () => {
+                    this.fireEvent('afterFormCreate');
+                },
+                failure: () => {
+                    this.fireEvent('afterFormCreateError');
+                }        
+            });
+        }
 
         this.formUpdate = document.querySelector(this.options.formUpdate);
 
-        this.formUpdate.save({
-            success: () => {
-                this.fireEvent('afterFormUpdate');
-            },
-            failure: () => {
-                this.fireEvent('afterFormUpdateError');
-            }
-        });
+        if (this.formUpdate) {
+            this.formUpdate.save({
+                success: () => {
+                    this.fireEvent('afterFormUpdate');
+                },
+                failure: () => {
+                    this.fireEvent('afterFormUpdateError');
+                }
+            });
+        }
+
     }
      
     fireEvent(name, args){
@@ -80,11 +85,10 @@ class HcodeGrid {
     btnUpdateClick(e){
         this.fireEvent('beforeEventUpdateClick', [e]);
 
-        let formUpdate = document.querySelector(this.options.formUpdate);
         let data = this.getTrData(e);
          
         for (let name in  data) {
-            this.options.onUpdateLoad(formUpdate, name, data);
+            this.options.onUpdateLoad(this.formUpdate, name, data);
         
         }
         this.fireEvent('afterEventUpdateClick', [e]);
