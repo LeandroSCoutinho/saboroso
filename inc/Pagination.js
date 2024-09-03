@@ -35,6 +35,8 @@ class Pagination {
                     this.totalPages = Math.ceil(this.total / this.itensPerPage);
                     this.currentPage++;
 
+                    console.log(this.total);
+                    console.log(this.totalPages);
                     resolve(this.data);
                 }
             });
