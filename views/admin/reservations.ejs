@@ -226,42 +226,39 @@
           
         });
           
-        const ctx = document.getElementById('chart');
+        const grafico = document.getElementById('chart');
 
-        new Chart(ctx, {
+        const myChart = new Chart(grafico, {
           type: 'line',
           data: {
-            labels: ['Jan', 'Fev', 'mar', 'Abr', 'Mai', 'Jun'],
+            labels: [],  
             datasets: [{
+              data: [],  
               label: 'Reservas',
-              data: [3, 5, 6, 2, 5, 2],
               backgroundColor: 'rgb(54, 162, 235)',
-              borderColor: 'rgb(54, 162, 2235)',
+              borderColor: 'rgb(54, 162, 235)',
               fill: true,
               pointBackgroundColor: '#FFF'
             }]
           },
           options: {
-            tooltips:{
-              mode: 'index',
-              intersect: false
-            },
             scales: {
-              x: [{
-                display: true,
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Mês'
-                }
-              }],
-              y: [{
-                display: true,
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Reservas'
-                }
-              }]
+              y: {
+                beginAtZero: true
+              }
             }
           }
         });
+
+        fetch(`/admin/reservations/chart${window.location.search}`)
+          .then(response => response.json())
+          .then(json => {
+         
+            myChart.data.labels = json.months;
+            myChart.data.datasets[0].data = json.values;
+
+           
+            myChart.update();
+          });
+
     </script>
