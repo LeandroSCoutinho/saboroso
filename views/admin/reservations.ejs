@@ -51,6 +51,10 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body no-padding">
+            <!-- grafico -->
+            <div style="padding:10px">
+              <canvas id="chart" style="height:250px;"></canvas>
+            </div>
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
@@ -201,6 +205,7 @@
 
     <script src="/js/formSave.js"></script>
     <script src="/js/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="/js/hcode-grid.js"></script>
     <script>
         new HcodeGrid({
@@ -221,4 +226,42 @@
           
         });
           
+        const ctx = document.getElementById('chart');
+
+        new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: ['Jan', 'Fev', 'mar', 'Abr', 'Mai', 'Jun'],
+            datasets: [{
+              label: 'Reservas',
+              data: [3, 5, 6, 2, 5, 2],
+              backgroundColor: 'rgb(54, 162, 235)',
+              borderColor: 'rgb(54, 162, 2235)',
+              fill: true,
+              pointBackgroundColor: '#FFF'
+            }]
+          },
+          options: {
+            tooltips:{
+              mode: 'index',
+              intersect: false
+            },
+            scales: {
+              x: [{
+                display: true,
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Mês'
+                }
+              }],
+              y: [{
+                display: true,
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Reservas'
+                }
+              }]
+            }
+          }
+        });
     </script>
