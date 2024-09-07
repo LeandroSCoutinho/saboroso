@@ -9,10 +9,6 @@ var formidable = require("formidable");
 var path = require('path');
 var http = require('http');
 var socket = require('socket.io');
-
-var indexRouter = require('./routes/index');
-// var usersRouter = require('./routes/users');
-var adminRouter = require('./routes/admin');
 const { createClient } = require("redis");
 
 
@@ -23,10 +19,18 @@ var io = socket(http);
 
 io.on('connection', function(socket) {
   console.log('Novo usuário conectado!');
+
+  io.emit("reservations update", {date: new Date()});
 })
+
+var indexRouter = require('./routes/index')(io);
+var adminRouter = require('./routes/admin')(io);
 
 app.use(function(req, res, next){
 
+  req,body = {
+    
+  }
   if (req.method === 'POST') {
       var form = formidable.IncomingForm({
         uploadDir: path.join(__dirname, "/public/images"),
@@ -95,4 +99,4 @@ http.listen(3000, function() {
   console.log("Servidor em execução...");
 });
 
-// module.exports = app;
+
